@@ -15,7 +15,10 @@ vim.keymap.set("x", "<leader>P", [["_dP]])
 
 -- pastr from system clipboard
 vim.keymap.set("n", "<leader>p", [["+p]])
+<<<<<<< HEAD
 vim.keymap.set("x", "<leader>p", [["+p]])
+=======
+>>>>>>> cb985b710782b05f5bc108bc49ae50179996f0fc
 
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
