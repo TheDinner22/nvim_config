@@ -1,3 +1,5 @@
+vim.filetype.add({ extension = { slint = "slint" } })
+
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
