@@ -10,6 +10,9 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
+-- fighting one eyed kirby
+vim.keymap.set("v", "<leader>fe", ":s/\\(.*\\)/thing")
+
 -- greatest remap ever
 vim.keymap.set("x", "<leader>P", [["_dP]])
 
