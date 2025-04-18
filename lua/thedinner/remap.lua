@@ -41,7 +41,7 @@ vim.keymap.set("n", "<leader>d", function()
   })
 
   -- Run bat on the current file *inside the terminal buffer*
-  vim.fn.termopen({ "bat", "--paging=always", filepath })
+  vim.fn.termopen({ "bat", "--paging=always", filepath, "-d" })
   vim.cmd("startinsert")
 end)
 
