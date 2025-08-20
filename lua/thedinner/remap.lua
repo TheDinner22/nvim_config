@@ -77,6 +77,9 @@ vim.keymap.set("n", "<leader>m", "<cmd>!make CXX='ccache g++'<CR>")
 -- run ./run.sh
 vim.keymap.set("n", "<leader>n", "<cmd>!./run.sh<CR>")
 
+-- toggle live md preview
+vim.keymap.set("n", "<leader>md", "<cmd>:MarkdownPreviewToggle<CR>")
+
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
