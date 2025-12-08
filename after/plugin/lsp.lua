@@ -30,6 +30,56 @@ end)
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
 
+lsp.configure("clangd", {
+  cmd = { 
+    "clangd", 
+    "--background-index", 
+    "--clang-tidy", 
+    "--compile-commands-dir=build", -- Add this line
+    "--query-driver=/usr/bin/g++,/usr/bin/gcc,/usr/bin/c++"
+  },
+  filetypes = { "c", "cpp", "objc", "objcpp", "hpp" },
+  root_dir = require("lspconfig.util").root_pattern(
+    "compile_commands.json", -- Add this to look for compile_commands.json
+    ".git"
+  ),
+  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  init_options = {
+    clangdFileStatus = true,
+    usePlaceholders = true,
+    completeUnimported = true,
+  },
+})
+
+-- after your current lsp setup/config for clangd, but before final lsp.setup()
+require('lspconfig').ocamllsp.setup({
+  cmd = { "ocamllsp" },
+  filetypes = {
+    "ocaml",
+    "ocaml.interface",
+    "ocaml.menhir",
+    "ocaml.ocamllex",
+    "reason",
+    "dune",
+  },
+  root_dir = require("lspconfig.util").root_pattern(
+    "dune-project", "dune-workspace", "*.opam", "esy.json", "package.json", ".git"
+  ),
+  settings = {},  -- you can optionally add ocamllsp-specific settings here
+  on_attach = function(client, bufnr)
+    -- reuse your existing keymaps (or call your shared on_attach)
+    local opts = { buffer = bufnr, remap = false }
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "<leader>ls", vim.lsp.buf.workspace_symbol, opts)
+    vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, opts)
+    vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
+    vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+  end,
+})
+
 lsp.setup()
 
 vim.diagnostic.config({
