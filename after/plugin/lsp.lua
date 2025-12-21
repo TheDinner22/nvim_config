@@ -41,28 +41,28 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 -- (Optional) Configure lua language server for neovim
--- lsp.nvim_workspace()
+lsp.nvim_workspace()
 
-lsp.configure("clangd", {
-  cmd = { 
-    "clangd", 
-    "--background-index", 
-    "--clang-tidy", 
-    "--compile-commands-dir=build", -- Add this line
-    "--query-driver=/usr/bin/g++,/usr/bin/gcc,/usr/bin/c++"
-  },
-  filetypes = { "c", "cpp", "objc", "objcpp", "hpp" },
-  root_dir = require("lspconfig.util").root_pattern(
-    "compile_commands.json", -- Add this to look for compile_commands.json
-    ".git"
-  ),
-  capabilities = require("cmp_nvim_lsp").default_capabilities(),
-  init_options = {
-    clangdFileStatus = true,
-    usePlaceholders = true,
-    completeUnimported = true,
-  },
-})
+-- lsp.configure("clangd", {
+  -- cmd = { 
+    -- "clangd", 
+    -- "--background-index", 
+    -- "--clang-tidy", 
+    -- "--compile-commands-dir=build", -- Add this line
+    -- "--query-driver=/usr/bin/g++,/usr/bin/gcc,/usr/bin/c++"
+  -- },
+  -- filetypes = { "c", "cpp", "objc", "objcpp", "hpp" },
+  -- root_dir = require("lspconfig.util").root_pattern(
+    -- "compile_commands.json", -- Add this to look for compile_commands.json
+    -- ".git"
+  -- ),
+  -- capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  -- init_options = {
+    -- clangdFileStatus = true,
+    -- usePlaceholders = true,
+    -- completeUnimported = true,
+  -- },
+-- })
 
 -- after your current lsp setup/config for clangd, but before final lsp.setup()
 -- require('lspconfig').ocamllsp.setup({
@@ -110,9 +110,7 @@ lsp.configure("rust_analyzer", {
       cargo = {
         allFeatures = true,
       },
-      checkOnSave = {
-        command = "clippy",
-      },
+      checkOnSave = true,
     },
   },
 })
