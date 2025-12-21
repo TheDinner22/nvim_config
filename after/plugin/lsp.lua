@@ -6,12 +6,25 @@ local lsp = require('lsp-zero').preset({
 })
 
 local cmp = require("cmp")
-local cmp_mappings = lsp.defaults.cmp_mappings({
-	["<C-Space>"] = cmp.mapping.complete()
-}) 
+local cmp_action = require('lsp-zero').cmp_action()
 
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
+cmp.setup({
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+        ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    }),
+    snippet = {
+        expand = function(args)
+        require('luasnip').lsp_expand(args.body)
+        end,
+    },
 })
 
 lsp.on_attach(function(client, bufnr)
@@ -28,7 +41,7 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 -- (Optional) Configure lua language server for neovim
-lsp.nvim_workspace()
+-- lsp.nvim_workspace()
 
 lsp.configure("clangd", {
   cmd = { 
