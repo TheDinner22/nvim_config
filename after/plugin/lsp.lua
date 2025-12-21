@@ -19,7 +19,6 @@ cmp.setup({
             behavior = cmp.ConfirmBehavior.Insert,
             select = true,
         }),
-        ['<Tab>'] = cmp.select_next_item(),
         ['<C-f>'] = cmp_action.luasnip_jump_forward(),
         ['<C-b>'] = cmp_action.luasnip_jump_backward(),
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
