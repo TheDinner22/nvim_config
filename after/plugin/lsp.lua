@@ -85,7 +85,7 @@ lsp.configure("ocamllsp", {
 })
 
 lsp.configure("rust_analyzer", {
-  cmd = { "/run/current-system/sw/bin/rust-analyzer" }, -- MUST be the Nix one in PATH
+  cmd = { "rust-analyzer" }, -- MUST be the Nix one in PATH
   filetypes = { "rust" },
   root_dir = require("lspconfig.util").root_pattern(
     "Cargo.toml",
