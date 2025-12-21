@@ -80,6 +80,26 @@ require('lspconfig').ocamllsp.setup({
   end,
 })
 
+lsp.configure("rust_analyzer", {
+  cmd = { "/run/current-system/sw/bin/rust-analyzer" }, -- MUST be the Nix one in PATH
+  filetypes = { "rust" },
+  root_dir = require("lspconfig.util").root_pattern(
+    "Cargo.toml",
+    "rust-project.json",
+    ".git"
+  ),
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+      },
+      checkOnSave = {
+        command = "clippy",
+      },
+    },
+  },
+})
+
 lsp.setup()
 
 vim.diagnostic.config({
