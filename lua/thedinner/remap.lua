@@ -84,6 +84,17 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*.sv", "*.svh"},
+    callback = function()
+        local file = vim.fn.expand("%:p")
+        local ok, result = pcall(vim.fn.system, {"verible-verilog-format", "--inplace", file})
+        if not ok then
+            vim.notify("Verible formatting failed: " .. result, vim.log.levels.WARN)
+        end
+    end,
+})
+
 -- auto close {}, [], and (), and <>?
 -- vim.keymap.set("i", "{", "{}<esc>i")
 -- vim.keymap.set("i", "[", "[]<esc>i")
