@@ -139,6 +139,15 @@ lsp.configure("rust_analyzer", {
   },
 })
 
+-- after your existing lsp.configure blocks
+lsp.configure("svls", {
+  cmd = { "svls" },
+  filetypes = { "verilog", "systemverilog" },
+  root_dir = require("lspconfig.util").root_pattern(".git", "*.sv", "*.svh"),
+})
+
+lsp.setup()
+
 lsp.setup()
 
 vim.diagnostic.config({
