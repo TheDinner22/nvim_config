@@ -84,7 +84,10 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
-vim.api.nvim_create_autocmd("BufWritePre", {
+-- https://stackoverflow.com/questions/77466697/how-to-automatically-format-on-save
+vim.api.nvim_create_autocmd(
+    "BufWritePost",
+    {
     pattern = {"*.sv", "*.svh"},
     callback = function()
         local file = vim.fn.expand("%:p")
@@ -92,6 +95,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         if not ok then
             vim.notify("Verible formatting failed: " .. result, vim.log.levels.WARN)
         end
+        vim.cmd("edit")
     end,
 })
 
