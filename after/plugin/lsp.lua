@@ -1,7 +1,7 @@
 local lsp = require('lsp-zero').preset({
   name = 'minimal',
   set_lsp_keymaps = true,
-  manage_nvim_cmp = true,
+  manage_nvim_cmp = false,
   suggest_lsp_servers = false,
 })
 
@@ -139,14 +139,17 @@ lsp.configure("rust_analyzer", {
   },
 })
 
--- after your existing lsp.configure blocks
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
 lsp.configure("svls", {
   cmd = { "svls" },
   filetypes = { "verilog", "systemverilog" },
-  root_dir = require("lspconfig.util").root_pattern(".git", "*.sv", "*.svh"),
+  root_dir = require("lspconfig.util").root_pattern(
+    "svls.toml",
+    ".git"
+  ),
+  capabilities = capabilities,
 })
-
-lsp.setup()
 
 lsp.setup()
 
