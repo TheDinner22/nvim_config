@@ -1,11 +1,12 @@
 local lsp = require('lsp-zero').preset({
   name = 'minimal',
   set_lsp_keymaps = true,
-  manage_nvim_cmp = true,
+  manage_nvim_cmp = false,
   suggest_lsp_servers = false,
 })
 
 local cmp = require("cmp")
+local luasnip = require('luasnip')
 local cmp_action = require('lsp-zero').cmp_action()
 
 cmp.setup({
@@ -45,8 +46,14 @@ cmp.setup({
     }),
     snippet = {
         expand = function(args)
-        require('luasnip').lsp_expand(args.body)
+        luasnip.lsp_expand(args.body)
         end,
+    },
+    sources = {
+        { name = 'nvim_lsp' },  -- ← THIS is the big one
+        { name = 'luasnip' },
+        { name = 'buffer' },
+        { name = 'path' },
     },
 })
 
